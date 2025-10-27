@@ -7,7 +7,7 @@
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
-      href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&display=swap"
+      href="https://fonts.googleapis.com/css2?family=Allura&family=Manrope:wght@400;500;600;700;800&display=swap"
       rel="stylesheet"
     />
     <style>
@@ -43,6 +43,8 @@
         background: radial-gradient(circle at 20% 20%, rgba(29, 179, 255, 0.35), transparent 55%),
           radial-gradient(circle at 80% 15%, rgba(66, 255, 189, 0.28), transparent 55%),
           linear-gradient(135deg, var(--bg-start), var(--bg-end));
+        background-size: 160% 160%;
+        animation: aurora 18s ease-in-out infinite;
         color: var(--text);
         overflow-x: hidden;
       }
@@ -56,6 +58,42 @@
         opacity: 0.8;
         z-index: 0;
         pointer-events: none;
+      }
+
+      body::after {
+        content: "";
+        position: fixed;
+        inset: -20% -30% 30% -30%;
+        background: conic-gradient(from 120deg, rgba(29, 179, 255, 0.1), rgba(66, 255, 189, 0), rgba(29, 179, 255, 0.12));
+        filter: blur(220px);
+        opacity: 0.7;
+        z-index: 0;
+        pointer-events: none;
+        animation: pulse-glow 14s ease-in-out infinite;
+      }
+
+      @keyframes aurora {
+        0% {
+          background-position: 0% 50%;
+        }
+        50% {
+          background-position: 100% 50%;
+        }
+        100% {
+          background-position: 0% 50%;
+        }
+      }
+
+      @keyframes pulse-glow {
+        0%,
+        100% {
+          opacity: 0.55;
+          transform: scale(1);
+        }
+        50% {
+          opacity: 0.9;
+          transform: scale(1.12);
+        }
       }
 
       .noise-layer {
@@ -108,6 +146,22 @@
         box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.01);
       }
 
+      [data-animated] {
+        animation: float-in 1.2s ease both;
+        animation-delay: var(--delay, 0s);
+      }
+
+      @keyframes float-in {
+        from {
+          opacity: 0;
+          transform: translateY(16px) scale(0.98);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0) scale(1);
+        }
+      }
+
       .card::after {
         content: "";
         position: absolute;
@@ -115,6 +169,17 @@
         border-radius: inherit;
         background: linear-gradient(130deg, rgba(29, 179, 255, 0.16), transparent 65%);
         opacity: 0.6;
+        pointer-events: none;
+      }
+
+      .card[data-animated]::before {
+        content: "";
+        position: absolute;
+        inset: 18px;
+        border-radius: 18px;
+        border: 1px solid rgba(29, 179, 255, 0.18);
+        opacity: 0.5;
+        filter: drop-shadow(0 0 14px rgba(29, 179, 255, 0.2));
         pointer-events: none;
       }
 
@@ -291,6 +356,16 @@
         opacity: 0.6;
       }
 
+      .info-card::after {
+        content: "";
+        position: absolute;
+        inset: 16px;
+        border-radius: 12px;
+        border: 1px dashed rgba(66, 255, 176, 0.4);
+        opacity: 0.35;
+        mix-blend-mode: screen;
+      }
+
       .info-label {
         font-size: 0.78rem;
         text-transform: uppercase;
@@ -365,6 +440,53 @@
         background: linear-gradient(to bottom, rgba(29, 179, 255, 0), rgba(29, 179, 255, 0.8));
         filter: drop-shadow(0 0 10px rgba(29, 179, 255, 0.8));
         animation: pulse 2.8s ease-in-out infinite;
+      }
+
+      .data-streams {
+        position: absolute;
+        inset: 0;
+        pointer-events: none;
+      }
+
+      .data-streams span {
+        position: absolute;
+        width: 2px;
+        height: 280px;
+        background: linear-gradient(180deg, rgba(66, 255, 176, 0), rgba(66, 255, 176, 0.8) 70%, rgba(66, 255, 176, 0));
+        filter: drop-shadow(0 0 10px rgba(66, 255, 176, 0.7));
+        animation: dataflow 6s linear infinite;
+      }
+
+      .data-streams span:nth-child(1) {
+        left: 26%;
+        animation-delay: -1.4s;
+      }
+
+      .data-streams span:nth-child(2) {
+        left: 48%;
+        animation-delay: -3.2s;
+      }
+
+      .data-streams span:nth-child(3) {
+        left: 68%;
+        animation-delay: -5.6s;
+      }
+
+      @keyframes dataflow {
+        0% {
+          transform: translateY(260px);
+          opacity: 0;
+        }
+        20% {
+          opacity: 1;
+        }
+        80% {
+          opacity: 1;
+        }
+        100% {
+          transform: translateY(-260px);
+          opacity: 0;
+        }
       }
 
       .map-glow span:nth-child(1) {
@@ -479,6 +601,15 @@
         animation: shimmer 6s ease-in-out infinite;
       }
 
+      .line::after {
+        content: "";
+        position: absolute;
+        inset: 20% 10% 10% 0;
+        background: radial-gradient(circle at top, rgba(255, 255, 255, 0.4), transparent 60%);
+        opacity: 0.5;
+        filter: blur(6px);
+      }
+
       .line.alt {
         background: linear-gradient(135deg, rgba(66, 255, 176, 0.9), rgba(29, 179, 255, 0));
         clip-path: polygon(0% 70%, 12% 60%, 24% 52%, 36% 46%, 48% 38%, 60% 32%, 72% 24%, 84% 18%, 96% 12%, 100% 8%, 100% 100%, 0% 100%);
@@ -552,6 +683,15 @@
         pointer-events: none;
       }
 
+      .legal-block::before {
+        content: "";
+        position: absolute;
+        inset: -40% 40% 60% -30%;
+        background: radial-gradient(circle, rgba(29, 179, 255, 0.18), transparent 65%);
+        opacity: 0.45;
+        filter: blur(35px);
+      }
+
       .block-title {
         text-transform: uppercase;
         letter-spacing: 2px;
@@ -574,6 +714,17 @@
         color: var(--accent-blue);
         font-weight: 700;
         text-shadow: 0 0 18px rgba(29, 179, 255, 0.45);
+      }
+
+      @media (prefers-reduced-motion: reduce) {
+        *,
+        *::before,
+        *::after {
+          animation-duration: 0.01ms !important;
+          animation-iteration-count: 1 !important;
+          transition-duration: 0.01ms !important;
+          scroll-behavior: auto !important;
+        }
       }
 
       .qr-block {
@@ -663,7 +814,7 @@
   <body>
     <div class="noise-layer"></div>
     <main>
-      <section class="security-banner full-width">
+      <section class="security-banner full-width" data-animated style="--delay: 0s">
         <div class="security-icon">⚠️</div>
         <div class="security-text">
           <strong>Важное уведомление безопасности</strong>
@@ -672,34 +823,34 @@
         </div>
       </section>
 
-      <section class="card primary-panel">
+      <section class="card primary-panel" data-animated style="--delay: 0.05s">
         <span class="greeting">С возвращением, Нелли Зверева</span>
         <div class="subline">Личный защищенный кабинет · Последняя синхронизация: 12 сек назад</div>
 
         <h1 class="operation-title">Операция вывода №74-ZB-921</h1>
-        <div class="status-chip">Ожидается комиссия гаранта</div>
+        <div class="status-chip" data-status="guarantor">Ожидается комиссия гаранта</div>
 
         <button class="cta-button">Оплатить комиссию гаранта: 10 300 RUB</button>
 
-        <div class="deadline">Срок исполнения <span>Срок: 10 ноября</span></div>
+        <div class="deadline">Срок исполнения <span id="deadline-counter" data-deadline="11-10">Срок: 10 ноября</span></div>
 
         <div class="info-grid">
-          <article class="info-card">
+          <article class="info-card" data-animated style="--delay: 0.1s">
             <div class="info-label">Гарант</div>
             <div class="info-value">EQ FINANCE TRUST</div>
             <div class="info-note">Сертификат № GF-221-904</div>
           </article>
-          <article class="info-card">
+          <article class="info-card" data-animated style="--delay: 0.15s">
             <div class="info-label">Канал подтверждения</div>
             <div class="info-value">SWIFT • A2P</div>
             <div class="info-note">Модуль двойной авторизации</div>
           </article>
-          <article class="info-card">
+          <article class="info-card" data-animated style="--delay: 0.2s">
             <div class="info-label">Доступный остаток</div>
             <div class="info-value">4 700 000 RUB</div>
             <div class="info-note">Резерв клиринга обновлен</div>
           </article>
-          <article class="info-card">
+          <article class="info-card" data-animated style="--delay: 0.25s">
             <div class="info-label">Следующий контроль</div>
             <div class="info-value">11:14 • GMT+3</div>
             <div class="info-note">График аудита активен</div>
@@ -707,7 +858,7 @@
         </div>
       </section>
 
-      <section class="card map-card">
+      <section class="card map-card" data-animated style="--delay: 0.18s">
         <div class="map-title">Мониторинг платежных шлюзов в реальном времени</div>
         <div class="map-wrapper">
           <div class="map-grid"></div>
@@ -749,6 +900,11 @@
               <line x1="500" y1="0" x2="500" y2="300" />
             </g>
           </svg>
+          <div class="data-streams">
+            <span></span>
+            <span></span>
+            <span></span>
+          </div>
           <div class="map-glow">
             <span></span>
             <span></span>
@@ -758,7 +914,7 @@
         </div>
 
         <div class="graph-stack">
-          <div class="graph-card">
+          <div class="graph-card" data-animated style="--delay: 0.25s">
             <div class="graph-title">Верификация межбанковских транзакций</div>
             <div class="graph-status">Успешно</div>
             <div class="graph-lines">
@@ -766,7 +922,7 @@
               <div class="line alt"></div>
             </div>
           </div>
-          <div class="graph-card">
+          <div class="graph-card" data-animated style="--delay: 0.32s">
             <div class="graph-title">Синхронизация узлов SWIFT</div>
             <div class="graph-status">Успешно</div>
             <div class="graph-lines">
@@ -776,7 +932,7 @@
           </div>
         </div>
 
-        <div class="card legal-card">
+        <div class="card legal-card" data-animated style="--delay: 0.38s">
           <h2>Юридическое основание и доказательство наличия средств</h2>
           <div class="legal-body">
             <div class="legal-text">
@@ -791,15 +947,15 @@
               </p>
             </div>
             <div class="legal-evidence">
-              <div class="legal-block">
+              <div class="legal-block" data-animated style="--delay: 0.45s">
                 <div class="block-title">Цифровая подпись гаранта</div>
                 <div class="signature">N. Carington</div>
               </div>
-              <div class="legal-block">
+              <div class="legal-block" data-animated style="--delay: 0.52s">
                 <div class="block-title">Штамп подтверждения</div>
                 <div class="stamp-code">GF-74ZB-921</div>
               </div>
-              <div class="legal-block qr-block">
+              <div class="legal-block qr-block" data-animated style="--delay: 0.6s">
                 <div class="qr-code"></div>
                 <div class="qr-info">
                   Сканируйте для проверки оригинала документа в распределенном реестре. Источник: Реестр нотариальных заверений EU/ASIA GRID.
@@ -810,5 +966,54 @@
         </div>
       </section>
     </main>
+
+    <script>
+      const deadlineElement = document.getElementById("deadline-counter");
+
+      if (deadlineElement) {
+        const formatInRussian = (date) => {
+          return new Intl.DateTimeFormat("ru-RU", {
+            day: "numeric",
+            month: "long",
+            hour: "2-digit",
+            minute: "2-digit",
+          }).format(date);
+        };
+
+        const computeDeadline = () => {
+          const [month, day] = deadlineElement.dataset.deadline.split("-").map(Number);
+          const now = new Date();
+          let deadline = new Date(now.getFullYear(), month - 1, day, 23, 59, 59);
+          if (deadline < now) {
+            deadline = new Date(now.getFullYear() + 1, month - 1, day, 23, 59, 59);
+          }
+          return deadline;
+        };
+
+        const updateCountdown = () => {
+          const deadline = computeDeadline();
+          const now = new Date();
+          const diff = deadline - now;
+
+          if (diff <= 0) {
+            deadlineElement.textContent = "Срок истек";
+            return;
+          }
+
+          const totalMinutes = Math.floor(diff / 60000);
+          const days = Math.floor(totalMinutes / (60 * 24));
+          const hours = Math.floor((totalMinutes % (60 * 24)) / 60);
+          const minutes = totalMinutes % 60;
+
+          deadlineElement.textContent = `Срок: ${days} д • ${hours.toString().padStart(2, "0")}:${minutes
+            .toString()
+            .padStart(2, "0")}`;
+          deadlineElement.setAttribute("title", `Фактический дедлайн: ${formatInRussian(deadline)}`);
+        };
+
+        updateCountdown();
+        setInterval(updateCountdown, 60000);
+      }
+    </script>
   </body>
 </html>
