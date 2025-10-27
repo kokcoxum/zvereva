@@ -10,6 +10,12 @@
       href="https://fonts.googleapis.com/css2?family=Allura&family=Manrope:wght@400;500;600;700;800&display=swap"
       rel="stylesheet"
     />
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css"
+      integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN"
+      crossorigin="anonymous"
+    />
     <style>
       :root {
         color-scheme: dark;
@@ -107,13 +113,12 @@
         pointer-events: none;
       }
 
-      main {
+      .app-shell {
         position: relative;
         z-index: 2;
-        width: min(1200px, 100%);
-        display: grid;
-        gap: 28px;
-        grid-template-columns: 1.1fr 0.9fr;
+        width: 100%;
+        max-width: 1200px;
+        margin: 0 auto;
         border-radius: 28px;
         padding: 36px;
         border: 1px solid rgba(29, 179, 255, 0.2);
@@ -122,7 +127,7 @@
         backdrop-filter: blur(26px);
       }
 
-      main::before {
+      .app-shell::before {
         content: "";
         position: absolute;
         inset: 0;
@@ -130,10 +135,6 @@
           radial-gradient(circle at 82% 72%, rgba(66, 255, 189, 0.2), transparent 55%);
         opacity: 0.5;
         pointer-events: none;
-      }
-
-      .full-width {
-        grid-column: 1 / -1;
       }
 
       .card {
@@ -334,9 +335,10 @@
 
       .info-grid {
         margin-top: 28px;
-        display: grid;
-        grid-template-columns: repeat(2, minmax(0, 1fr));
-        gap: 18px;
+      }
+
+      .info-grid .col {
+        display: flex;
       }
 
       .info-card {
@@ -346,6 +348,8 @@
         background: rgba(10, 30, 58, 0.75);
         position: relative;
         overflow: hidden;
+        width: 100%;
+        height: 100%;
       }
 
       .info-card::before {
@@ -641,9 +645,6 @@
 
       .legal-body {
         margin-top: 20px;
-        display: grid;
-        gap: 20px;
-        grid-template-columns: minmax(0, 1.1fr) minmax(0, 0.9fr);
       }
 
       .legal-text {
@@ -766,13 +767,8 @@
       }
 
       @media (max-width: 1080px) {
-        main {
-          grid-template-columns: 1fr;
-        }
-
-        .legal-body,
-        .info-grid {
-          grid-template-columns: 1fr;
+        .app-shell {
+          padding: 32px;
         }
       }
 
@@ -781,7 +777,7 @@
           padding: 20px;
         }
 
-        main {
+        .app-shell {
           padding: 24px;
         }
 
@@ -800,9 +796,8 @@
           padding: 16px;
         }
 
-        main {
+        .app-shell {
           padding: 20px;
-          gap: 24px;
         }
 
         .cta-button {
@@ -813,158 +808,178 @@
   </head>
   <body>
     <div class="noise-layer"></div>
-    <main>
-      <section class="security-banner full-width" data-animated style="--delay: 0s">
-        <div class="security-icon">⚠️</div>
-        <div class="security-text">
-          <strong>Важное уведомление безопасности</strong>
-          ВАЖНО: Остерегайтесь мошенников! «Жирный брокер» общается ТОЛЬКО через Telegram: @zhirny_broker. Никогда не делитесь
-          своими данными с кем-либо еще.
-        </div>
-      </section>
-
-      <section class="card primary-panel" data-animated style="--delay: 0.05s">
-        <span class="greeting">С возвращением, Нелли Зверева</span>
-        <div class="subline">Личный защищенный кабинет · Последняя синхронизация: 12 сек назад</div>
-
-        <h1 class="operation-title">Операция вывода №74-ZB-921</h1>
-        <div class="status-chip" data-status="guarantor">Ожидается комиссия гаранта</div>
-
-        <button class="cta-button">Оплатить комиссию гаранта: 10 300 RUB</button>
-
-        <div class="deadline">Срок исполнения <span id="deadline-counter" data-deadline="11-10">Срок: 10 ноября</span></div>
-
-        <div class="info-grid">
-          <article class="info-card" data-animated style="--delay: 0.1s">
-            <div class="info-label">Гарант</div>
-            <div class="info-value">EQ FINANCE TRUST</div>
-            <div class="info-note">Сертификат № GF-221-904</div>
-          </article>
-          <article class="info-card" data-animated style="--delay: 0.15s">
-            <div class="info-label">Канал подтверждения</div>
-            <div class="info-value">SWIFT • A2P</div>
-            <div class="info-note">Модуль двойной авторизации</div>
-          </article>
-          <article class="info-card" data-animated style="--delay: 0.2s">
-            <div class="info-label">Доступный остаток</div>
-            <div class="info-value">4 700 000 RUB</div>
-            <div class="info-note">Резерв клиринга обновлен</div>
-          </article>
-          <article class="info-card" data-animated style="--delay: 0.25s">
-            <div class="info-label">Следующий контроль</div>
-            <div class="info-value">11:14 • GMT+3</div>
-            <div class="info-note">График аудита активен</div>
-          </article>
-        </div>
-      </section>
-
-      <section class="card map-card" data-animated style="--delay: 0.18s">
-        <div class="map-title">Мониторинг платежных шлюзов в реальном времени</div>
-        <div class="map-wrapper">
-          <div class="map-grid"></div>
-          <svg class="world-map" viewBox="0 0 600 300" xmlns="http://www.w3.org/2000/svg">
-            <defs>
-              <radialGradient id="map-glow" cx="50%" cy="50%" r="65%">
-                <stop offset="0%" stop-color="rgba(29, 179, 255, 0.35)" />
-                <stop offset="100%" stop-color="rgba(29, 179, 255, 0)" />
-              </radialGradient>
-            </defs>
-            <rect width="600" height="300" fill="url(#map-glow)" opacity="0.6" />
-            <path
-              d="M70 170 L110 150 L150 148 L184 128 L206 140 L216 112 L252 102 L286 130 L320 124 L354 142 L390 152 L422 132 L460 142 L492 124 L520 150 L488 190 L440 198 L410 222 L368 212 L330 230 L296 204 L256 216 L220 196 L176 198 L144 178 L108 176 Z"
-              fill="rgba(29, 179, 255, 0.28)"
-              stroke="rgba(29, 179, 255, 0.55)"
-              stroke-width="1.6"
-            ></path>
-            <g stroke="rgba(66, 255, 176, 0.55)" stroke-width="1" stroke-dasharray="4 6" fill="none">
-              <path d="M120 150 Q220 120 320 150 T520 150" />
-              <path d="M140 170 Q240 210 360 190 T500 200" />
-              <path d="M80 120 Q150 70 260 90 T460 110" />
-            </g>
-            <g fill="rgba(66, 255, 176, 0.9)">
-              <circle cx="120" cy="150" r="5" />
-              <circle cx="240" cy="120" r="5" />
-              <circle cx="320" cy="150" r="6" />
-              <circle cx="420" cy="140" r="5" />
-              <circle cx="520" cy="160" r="6" />
-            </g>
-            <g stroke="rgba(29, 179, 255, 0.35)" stroke-width="1" opacity="0.45">
-              <line x1="0" y1="60" x2="600" y2="60" />
-              <line x1="0" y1="120" x2="600" y2="120" />
-              <line x1="0" y1="180" x2="600" y2="180" />
-              <line x1="0" y1="240" x2="600" y2="240" />
-              <line x1="100" y1="0" x2="100" y2="300" />
-              <line x1="200" y1="0" x2="200" y2="300" />
-              <line x1="300" y1="0" x2="300" y2="300" />
-              <line x1="400" y1="0" x2="400" y2="300" />
-              <line x1="500" y1="0" x2="500" y2="300" />
-            </g>
-          </svg>
-          <div class="data-streams">
-            <span></span>
-            <span></span>
-            <span></span>
-          </div>
-          <div class="map-glow">
-            <span></span>
-            <span></span>
-            <span></span>
-          </div>
-          <div class="map-legend"><span class="legend-dot"></span> Синхронизация хаба Лондон ⇄ Токио ⇄ Нью-Йорк</div>
-        </div>
-
-        <div class="graph-stack">
-          <div class="graph-card" data-animated style="--delay: 0.25s">
-            <div class="graph-title">Верификация межбанковских транзакций</div>
-            <div class="graph-status">Успешно</div>
-            <div class="graph-lines">
-              <div class="line"></div>
-              <div class="line alt"></div>
+    <main class="app-shell container-xxl">
+      <div class="row g-4">
+        <div class="col-12">
+          <section class="security-banner" data-animated style="--delay: 0s">
+            <div class="security-icon">⚠️</div>
+            <div class="security-text">
+              <strong>Важное уведомление безопасности</strong>
+              ВАЖНО: Остерегайтесь мошенников! «Жирный брокер» общается ТОЛЬКО через Telegram: @zhirny_broker. Никогда не делитесь
+              своими данными с кем-либо еще.
             </div>
-          </div>
-          <div class="graph-card" data-animated style="--delay: 0.32s">
-            <div class="graph-title">Синхронизация узлов SWIFT</div>
-            <div class="graph-status">Успешно</div>
-            <div class="graph-lines">
-              <div class="line"></div>
-              <div class="line alt"></div>
-            </div>
-          </div>
+          </section>
         </div>
 
-        <div class="card legal-card" data-animated style="--delay: 0.38s">
-          <h2>Юридическое основание и доказательство наличия средств</h2>
-          <div class="legal-body">
-            <div class="legal-text">
-              <p>
-                Настоящим подтверждается, что средства клиента «Нелли Зверева» размещены на транзитном счете, зарезервированы и готовы к
-                безусловному исполнению операции вывода №74-ZB-921 по запросу клиента при выполнении условий договора гарантийного
-                обслуживания.
-              </p>
-              <p>
-                Операция прошла процедуру due diligence, подтверждена по каналам SWIFT и защищена протоколами PQC-384. Электронно-цифровая
-                подпись хранится в модуле HSM уровня FIPS 140-3. Все действия логируются и доступны по официальному запросу.
-              </p>
-            </div>
-            <div class="legal-evidence">
-              <div class="legal-block" data-animated style="--delay: 0.45s">
-                <div class="block-title">Цифровая подпись гаранта</div>
-                <div class="signature">N. Carington</div>
+        <div class="col-12 col-xl-6">
+          <section class="card primary-panel h-100" data-animated style="--delay: 0.05s">
+            <span class="greeting">С возвращением, Нелли Зверева</span>
+            <div class="subline">Личный защищенный кабинет · Последняя синхронизация: 12 сек назад</div>
+
+            <h1 class="operation-title">Операция вывода №74-ZB-921</h1>
+            <div class="status-chip" data-status="guarantor">Ожидается комиссия гаранта</div>
+
+            <button class="cta-button">Оплатить комиссию гаранта: 10 300 RUB</button>
+
+            <div class="deadline">Срок исполнения <span id="deadline-counter" data-deadline="11-10">Срок: 10 ноября</span></div>
+
+            <div class="row row-cols-1 row-cols-sm-2 g-3 info-grid">
+              <div class="col">
+                <article class="info-card" data-animated style="--delay: 0.1s">
+                  <div class="info-label">Гарант</div>
+                  <div class="info-value">EQ FINANCE TRUST</div>
+                  <div class="info-note">Сертификат № GF-221-904</div>
+                </article>
               </div>
-              <div class="legal-block" data-animated style="--delay: 0.52s">
-                <div class="block-title">Штамп подтверждения</div>
-                <div class="stamp-code">GF-74ZB-921</div>
+              <div class="col">
+                <article class="info-card" data-animated style="--delay: 0.15s">
+                  <div class="info-label">Канал подтверждения</div>
+                  <div class="info-value">SWIFT • A2P</div>
+                  <div class="info-note">Модуль двойной авторизации</div>
+                </article>
               </div>
-              <div class="legal-block qr-block" data-animated style="--delay: 0.6s">
-                <div class="qr-code"></div>
-                <div class="qr-info">
-                  Сканируйте для проверки оригинала документа в распределенном реестре. Источник: Реестр нотариальных заверений EU/ASIA GRID.
+              <div class="col">
+                <article class="info-card" data-animated style="--delay: 0.2s">
+                  <div class="info-label">Доступный остаток</div>
+                  <div class="info-value">4 700 000 RUB</div>
+                  <div class="info-note">Резерв клиринга обновлен</div>
+                </article>
+              </div>
+              <div class="col">
+                <article class="info-card" data-animated style="--delay: 0.25s">
+                  <div class="info-label">Следующий контроль</div>
+                  <div class="info-value">11:14 • GMT+3</div>
+                  <div class="info-note">График аудита активен</div>
+                </article>
+              </div>
+            </div>
+          </section>
+        </div>
+
+        <div class="col-12 col-xl-6">
+          <section class="card map-card h-100" data-animated style="--delay: 0.18s">
+            <div class="map-title">Мониторинг платежных шлюзов в реальном времени</div>
+            <div class="map-wrapper">
+              <div class="map-grid"></div>
+              <svg class="world-map" viewBox="0 0 600 300" xmlns="http://www.w3.org/2000/svg">
+                <defs>
+                  <radialGradient id="map-glow" cx="50%" cy="50%" r="65%">
+                    <stop offset="0%" stop-color="rgba(29, 179, 255, 0.35)" />
+                    <stop offset="100%" stop-color="rgba(29, 179, 255, 0)" />
+                  </radialGradient>
+                </defs>
+                <rect width="600" height="300" fill="url(#map-glow)" opacity="0.6" />
+                <path
+                  d="M70 170 L110 150 L150 148 L184 128 L206 140 L216 112 L252 102 L286 130 L320 124 L354 142 L390 152 L422 132 L460 142 L492 124 L520 150 L488 190 L440 198 L410 222 L368 212 L330 230 L296 204 L256 216 L220 196 L176 198 L144 178 L108 176 Z"
+                  fill="rgba(29, 179, 255, 0.28)"
+                  stroke="rgba(29, 179, 255, 0.55)"
+                  stroke-width="1.6"
+                ></path>
+                <g stroke="rgba(66, 255, 176, 0.55)" stroke-width="1" stroke-dasharray="4 6" fill="none">
+                  <path d="M120 150 Q220 120 320 150 T520 150" />
+                  <path d="M140 170 Q240 210 360 190 T500 200" />
+                  <path d="M80 120 Q150 70 260 90 T460 110" />
+                </g>
+                <g fill="rgba(66, 255, 176, 0.9)">
+                  <circle cx="120" cy="150" r="5" />
+                  <circle cx="240" cy="120" r="5" />
+                  <circle cx="320" cy="150" r="6" />
+                  <circle cx="420" cy="140" r="5" />
+                  <circle cx="520" cy="160" r="6" />
+                </g>
+                <g stroke="rgba(29, 179, 255, 0.35)" stroke-width="1" opacity="0.45">
+                  <line x1="0" y1="60" x2="600" y2="60" />
+                  <line x1="0" y1="120" x2="600" y2="120" />
+                  <line x1="0" y1="180" x2="600" y2="180" />
+                  <line x1="0" y1="240" x2="600" y2="240" />
+                  <line x1="100" y1="0" x2="100" y2="300" />
+                  <line x1="200" y1="0" x2="200" y2="300" />
+                  <line x1="300" y1="0" x2="300" y2="300" />
+                  <line x1="400" y1="0" x2="400" y2="300" />
+                  <line x1="500" y1="0" x2="500" y2="300" />
+                </g>
+              </svg>
+              <div class="data-streams">
+                <span></span>
+                <span></span>
+                <span></span>
+              </div>
+              <div class="map-glow">
+                <span></span>
+                <span></span>
+                <span></span>
+              </div>
+              <div class="map-legend"><span class="legend-dot"></span> Синхронизация хаба Лондон ⇄ Токио ⇄ Нью-Йорк</div>
+            </div>
+
+            <div class="graph-stack">
+              <div class="graph-card" data-animated style="--delay: 0.25s">
+                <div class="graph-title">Верификация межбанковских транзакций</div>
+                <div class="graph-status">Успешно</div>
+                <div class="graph-lines">
+                  <div class="line"></div>
+                  <div class="line alt"></div>
+                </div>
+              </div>
+              <div class="graph-card" data-animated style="--delay: 0.32s">
+                <div class="graph-title">Синхронизация узлов SWIFT</div>
+                <div class="graph-status">Успешно</div>
+                <div class="graph-lines">
+                  <div class="line"></div>
+                  <div class="line alt"></div>
                 </div>
               </div>
             </div>
-          </div>
+
+            <div class="card legal-card" data-animated style="--delay: 0.38s">
+              <h2>Юридическое основание и доказательство наличия средств</h2>
+              <div class="row gy-4 legal-body">
+                <div class="col-12 col-lg-7">
+                  <div class="legal-text">
+                    <p>
+                      Настоящим подтверждается, что средства клиента «Нелли Зверева» размещены на транзитном счете, зарезервированы и готовы к
+                      безусловному исполнению операции вывода №74-ZB-921 по запросу клиента при выполнении условий договора гарантийного
+                      обслуживания.
+                    </p>
+                    <p>
+                      Операция прошла процедуру due diligence, подтверждена по каналам SWIFT и защищена протоколами PQC-384. Электронно-цифровая
+                      подпись хранится в модуле HSM уровня FIPS 140-3. Все действия логируются и доступны по официальному запросу.
+                    </p>
+                  </div>
+                </div>
+                <div class="col-12 col-lg-5">
+                  <div class="legal-evidence">
+                    <div class="legal-block" data-animated style="--delay: 0.45s">
+                      <div class="block-title">Цифровая подпись гаранта</div>
+                      <div class="signature">N. Carington</div>
+                    </div>
+                    <div class="legal-block" data-animated style="--delay: 0.52s">
+                      <div class="block-title">Штамп подтверждения</div>
+                      <div class="stamp-code">GF-74ZB-921</div>
+                    </div>
+                    <div class="legal-block qr-block" data-animated style="--delay: 0.6s">
+                      <div class="qr-code"></div>
+                      <div class="qr-info">
+                        Сканируйте для проверки оригинала документа в распределенном реестре. Источник: Реестр нотариальных заверений EU/ASIA GRID.
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </section>
         </div>
-      </section>
+      </div>
     </main>
 
     <script>
